@@ -1,0 +1,78 @@
+<!-- app/views/spending/_calendar_grid.html.erb -->
+<%= turbo_frame_tag "spending-calendar" do %>
+  <div class="spending-calendar w-full" data-controller="calendar">
+    <div class="navigation-row flex justify-between items-center py-2.5 px-2.5">
+      <%= button_to spending_path(month: @month - 1), 
+          class: "nav-button h-11 w-11 rounded-xl bg-opacity-30 bg-primary-container border-2 border-primary border-opacity-60",
+          data: { turbo_frame: "spending-calendar" } do %>
+        <i class="fas fa-arrow-left"></i>
+      <% end %>
+      
+      <h2 class="text-2xl text-primary font-montserrat text-center flex-1 mt-2 truncate">
+        <%= Date.new(@year, @month, 1).strftime("%B %Y") %>
+      </h2>
+      
+      <%= button_to spending_path(month: @month + 1),
+          class: "nav-button h-11 w-11 rounded-xl bg-opacity-30 bg-primary-container border-2 border-primary border-opacity-60",
+          data: { turbo_frame: "spending-calendar" } do %>
+        <i class="fas fa-arrow-right"></i>
+      <% end %>
+    </div>
+
+    <div class="calendar-grid grid grid-cols-7 gap-2 px-3 py-2">
+      <% days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] %>
+      <% days.each do |day| %>
+        <div class="day-column">
+          <div class="text-sm text-gray-600 opacity-70"><%= day %></div>
+          <div class="day-cells space-y-2">
+            <% 
+              require 'date'
+              first_day = Date.new(@year, @month, 1)
+              days_in_month = Date.new(@year, @month, -1).day
+              first_day_of_week = first_day.wday
+              total_cells = first_day_of_week + days_in_month
+              weeks = (total_cells.to_f / 7).ceil
+              
+              week_index = 0
+              while week_index < weeks do
+                cell_index = week_index * 7 + days.index(day)
+                date = if cell_index >= first_day_of_week && cell_index < first_day_of_week + days_in_month
+                  first_day + (cell_index - first_day_of_week)
+                end
+            %>
+              <% if date %>
+                <% 
+                  day_spending = @monthly_spending_list[date.day - 1] || 0
+                  total_spending = @monthly_spending_list.sum
+                  color_intensity = total_spending > 0 ? [day_spending / total_spending, 1].min : 0
+                  background_color = if day_spending == 0
+                    '#B0B0B0'
+                  else
+                    green_value = [[255 * (1 - color_intensity), 255].min, 128].max
+                    "rgb(0, #{green_value.to_i}, 0)"
+                  end
+                %>
+                <%= link_to "", 
+                    spending_path(date: date.to_datetime),
+                    class: "calendar-day h-10 w-10 rounded-lg block",
+                    style: "background-color: #{background_color}",
+                    data: {
+                      turbo_frame: "spending-calendar",
+                      action: "calendar#selectDate",
+                      calendar_date_param: date.to_datetime.strftime('%Y-%m-%dT%H:%M:%S')
+                    }
+                %>
+              <% else %>
+                <div class="h-10 w-10 rounded-lg"></div>
+              <% end %>
+            <% 
+              week_index += 1
+              end 
+            %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+

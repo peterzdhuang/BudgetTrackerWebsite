@@ -16,9 +16,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_01_002955) do
 
   create_table "spendings", force: :cascade do |t|
     t.string "name"
-    t.decimal "price", precision: 10, scale: 2
-    t.decimal "kilograms", precision: 10, scale: 2
-    t.decimal "quantity", precision: 10, scale: 2
+    t.decimal "price"
+    t.decimal "kilograms"
+    t.decimal "quantity"
     t.string "date_time_utc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
