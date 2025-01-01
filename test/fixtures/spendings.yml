@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  price: 9.99
+  kilograms: 9.99
+  quantity: 9.99
+  date_time_utc: MyString
+
+two:
+  name: MyString
+  price: 9.99
+  kilograms: 9.99
+  quantity: 9.99
+  date_time_utc: MyString
