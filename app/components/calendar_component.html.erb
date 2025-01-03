@@ -1,0 +1,56 @@
+<% require 'date' %>
+<% first_day = Date.new(@year, @month, 1) %>
+<% days_in_month = first_day.end_of_month.day %>
+<% first_day_of_week = first_day.wday %>
+<% total_spending = @daily_totals.sum %>
+
+<div class="spending-calendar">
+  <div class="calendar-header">
+    <h2><%= Date.new(@year, @month, 1).strftime("%B %Y") %> Spending Calendar</h2>
+  </div>
+
+  <div class="calendar-container">
+    <div class="calendar-wrapper">
+        <div class="weekday-labels">
+            <% %w[Sun Mon Tue Wed Thu Fri Sat].each do |day| %>
+                <div class="weekday-label"><%= day %></div>
+            <% end %>
+        </div>
+
+      <%# Calendar grid %>
+      <div class="calendar-grid">
+        <%# Empty cells for days before the month starts %>
+        <% first_day_of_week.times do %>
+          <div class="calendar-day empty"></div>
+        <% end %>
+
+        <%# Calendar days %>
+        <% (1..days_in_month).each do |day| %>
+          <% date = Date.new(@year, @month, day) %>
+          <% daily_spending = @daily_totals[day - 1] %>
+          <% 
+            # Calculate background color based on spending
+            background_color = case daily_spending
+              when 0 then "rgb(238, 238, 238)"
+              when 0..20 then "rgb(200, 230, 200)"
+              when 20..50 then "rgb(150, 200, 150)"
+              when 50..80 then "rgb(100, 170, 100)"
+              else "rgb(50, 140, 50)"
+            end
+          %>
+
+          <%= link_to "", 
+              daily_spending_path(date: date.strftime('%Y-%m-%d')),
+              class: "calendar-day",
+              style: "background-color: #{background_color}",
+              data: {
+                turbo_frame: "spending-calendar",
+                action: "calendar#selectDate",
+                calendar_date_param: date.to_datetime.strftime('%Y-%m-%dT%H:%M:%S')
+              }
+          %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

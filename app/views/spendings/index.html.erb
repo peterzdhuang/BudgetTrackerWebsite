@@ -1,45 +1,8 @@
-<% require 'date' %>
-<% first_day = Date.new(@year, @month, 1) %>
-<% days_in_month = first_day.end_of_month.day %>
-<% first_day_of_week = first_day.wday %>
-<% total_spending = @daily_totals.sum %>
-
-<div class="calendar-grid grid grid-cols-7 gap-2 px-3 py-2">
-  <% days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] %>
-  <% days.each do |day| %>
-    <div class="day-column">
-      <div class="text-sm text-gray-600 opacity-70"><%= day %></div>
-      <div class="day-cells space-y-2">
-        <% (0...(days_in_month + first_day_of_week)).each do |cell_index| %>
-          <% date = if cell_index >= first_day_of_week && cell_index < days_in_month + first_day_of_week
-            first_day + (cell_index - first_day_of_week)
-          end %>
-          <% if date && date.month == @month %>
-            <% 
-              day_spending = @daily_totals[date.day - 1]
-              color_intensity = total_spending > 0 ? [day_spending / total_spending, 1].min : 0
-              background_color = if day_spending == 0
-                '#B0B0B0'
-              else
-                green_value = [[255 * (1 - color_intensity), 255].min, 128].max
-                "rgb(0, #{green_value.to_i}, 0)"
-              end
-            %>
-            <%= link_to "", 
-                daily_spending_path(date: date.strftime('%Y-%m-%d')),
-                class: "calendar-day h-10 w-10 rounded-lg block",
-                style: "background-color: #{background_color}",
-                data: {
-                  turbo_frame: "spending-calendar",
-                  action: "calendar#selectDate",
-                  calendar_date_param: date.to_datetime.strftime('%Y-%m-%dT%H:%M:%S')
-                }
-            %>
-          <% else %>
-            <div class="h-10 w-10 rounded-lg"></div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+<div class="main-page">
+  <div class="calendar-container">
+    <%= render CalendarComponent.new(year: @year, month: @month, daily_totals: @daily_totals) %>
+  </div>
+  <div class="spending-form-container">
+    <%= render SpendingFormComponent.new(spending: Spending.new) %>
+  </div>
 </div>

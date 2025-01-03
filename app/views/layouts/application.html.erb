@@ -7,11 +7,11 @@
   <%= csrf_meta_tags %> <!-- CSRF protection -->
   <%= csp_meta_tag %> <!-- Content Security Policy header -->
   <%= javascript_include_tag "application", "data-turbo-track": "reload" %> <!-- Include JS files -->
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+
 </head>
 <body>
-  <header>
-    <h1>Welcome to the Spendings App</h1>
-  </header>
+  <%= render NavbarComponent.new(current_user: nil) %>
   <%= yield %> <!-- The content from `index.html.erb` will go here -->
   <footer>
     <p>&copy; 2025 Spendings App</p>

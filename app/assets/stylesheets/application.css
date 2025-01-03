@@ -1,10 +1,311 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+
+
+/* CALENDAR CSS */
+.spending-calendar {
+    width: 100%;
+    max-width: 48rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendar-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .calendar-header h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .calendar-container {
+    padding: 1rem;
+  }
+  
+  /* Updated weekday labels for horizontal layout */
+  .weekday-labels {
+    display: grid;
+    grid-template-columns: repeat(7, 2rem);
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .weekday-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-align: center;
+  }
+  
+  /* Calendar grid remains the same size as labels */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 2rem);
+    gap: 0.5rem;
+  }
+  
+  .calendar-day {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+    display: block;
+  }
+  
+  .calendar-day:hover {
+    opacity: 0.75;
+  }
+  
+  .calendar-day.empty {
+    background-color: transparent;
+  }
+  
+/* Spending form css */ 
+.spending-form {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .spending-form h3 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .spending-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .spending-form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .spending-form label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #4b5563;
+  }
+  
+  .spending-form input {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .spending-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  .spending-form input[type="submit"] {
+    background-color: #2563eb;
+    color: white;
+    font-weight: 500;
+    padding: 0.625rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s;
+  }
+  
+  .spending-form input[type="submit"]:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .spending-form input[type="submit"]:active {
+    background-color: #1e40af;
+  }
+  
+  /* Specific styling for number inputs */
+  .spending-form input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+  
+  .spending-form input[type="number"]::-webkit-outer-spin-button,
+  .spending-form input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Style for datetime-local input */
+  .spending-form input[type="datetime-local"] {
+    padding-right: 0.5rem;
+  }
+  
+  /* Optional: Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .spending-form {
+      background-color: #1f2937;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  
+    .spending-form h3 {
+      color: #e5e7eb;
+    }
+  
+    .spending-form label {
+      color: #9ca3af;
+    }
+  
+    .spending-form input {
+      background-color: #374151;
+      border-color: #4b5563;
+      color: #e5e7eb;
+    }
+  
+    .spending-form input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  
+    .spending-form input[type="submit"] {
+      background-color: #3b82f6;
+    }
+  
+    .spending-form input[type="submit"]:hover {
+      background-color: #2563eb;
+    }
+  
+    .spending-form input[type="submit"]:active {
+      background-color: #1d4ed8;
+    }
+  }
+
+/* App */
+.main-page {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .calendar-container {
+    flex: 0 0 70%;
+    min-width: 0; /* Prevents flex item from overflowing */
+  }
+  
+  .spending-form-container {
+    flex: 0 0 30%;
+    min-width: 300px; /* Ensures form remains usable at smaller sizes */
+  }
+  
+  /* Make layout responsive */
+  @media (max-width: 1024px) {
+    .main-page {
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+  
+    .calendar-container,
+    .spending-form-container {
+      flex: 0 0 100%;
+      width: 100%;
+    }
+  }
+
+
+
+  /* Navbar */ 
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .logo:hover {
+    color: #1d4ed8;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-pfp {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+    transition: border-color 0.2s ease;
+  }
+  
+  .profile-pfp:hover {
+    border-color: #2563eb;
+  }
+  
+  /* Optional: Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .navbar {
+      background-color: #1f2937;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  
+    .logo {
+      color: #3b82f6;
+    }
+  
+    .logo:hover {
+      color: #60a5fa;
+    }
+  
+    .profile-pfp {
+      border-color: #374151;
+    }
+  
+    .profile-pfp:hover {
+      border-color: #3b82f6;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .navbar {
+      padding: 0.75rem 1rem;
+    }
+  
+    .logo {
+      font-size: 1.125rem;
+    }
+  
+    .profile-pfp {
+      width: 32px;
+      height: 32px;
+    }
+  }

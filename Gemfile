@@ -18,6 +18,7 @@ gem "jbuilder"
 gem "dotenv-rails", groups: [ :development, :test ]
 
 gem "pg", "~> 1.4"
+gem "view_component"
 
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]

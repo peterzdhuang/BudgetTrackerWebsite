@@ -1,0 +1,8 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <a href="/" class="logo">Spendings App</a>
+  </div>
+  <div class="navbar-right">
+    <%= image_tag(@current_user&.avatar_url || asset_path('nil_user.png'), class: "profile-pfp") %>
+  </div>
+</nav>

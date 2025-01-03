@@ -1,0 +1,28 @@
+<div class="spending-form">
+  <h3>Add Spending</h3>
+  <%= form_with model: @spending, url: spendings_path, method: :post, local: true do |f| %>
+    <div>
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name %>
+    </div>
+    <div>
+      <%= f.label :price, "Price" %>
+      <%= f.number_field :price, step: 0.01 %>
+    </div>
+    <div>
+      <%= f.label :kilograms, "Kilograms" %>
+      <%= f.number_field :kilograms, step: 0.01 %>
+    </div>
+    <div>
+      <%= f.label :quantity, "Quantity" %>
+      <%= f.number_field :quantity %>
+    </div>
+    <div>
+      <%= f.label :date_time_utc, "Date and Time" %>
+      <%= f.datetime_local_field :date_time_utc %>
+    </div>
+    <div>
+      <%= f.submit "Create Spending" %>
+    </div>
+  <% end %>
+</div>
